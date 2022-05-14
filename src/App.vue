@@ -1,14 +1,17 @@
 <template>
   <product-add-form />
+  <product-card />
 </template>
 
 <script>
 import ProductAddForm from "./components/ProductAddForm.vue";
+import ProductCard from "./components/ProductCard.vue";
 
 export default {
   name: "App",
   components: {
     ProductAddForm,
+    ProductCard,
   },
 };
 </script>
