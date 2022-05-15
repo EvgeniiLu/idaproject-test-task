@@ -1,6 +1,8 @@
 <template>
   <div class="product-card">
-    <button class="product-delete"></button>
+    <button class="product-delete">
+      <delete-icon />
+    </button>
     <div class="product-image">
       <img src="../assets/img/Rectangle.png" alt="Упс, ошибочка(" />
     </div>
@@ -12,12 +14,19 @@
           Довольно-таки интересное описание товара в несколько строк
         </span>
       </div>
-      <div class="product-price"><span>10 000</span><span>руб.</span></div>
+      <div class="product-price"><span>10 000</span> <span>руб.</span></div>
     </div>
   </div>
 </template>
 <script>
-export default {};
+import DeleteIcon from "./DeleteIcon.vue";
+
+export default {
+  name: "ProductCard",
+  components: {
+    DeleteIcon,
+  },
+};
 </script>
 <style lang="scss" scoped>
 .product-card {
@@ -34,8 +43,8 @@ export default {};
     cursor: pointer;
 
     .product-delete {
-      opacity: 1;
-      transition: opacity 0.1s linear;
+      opacity: 0.6;
+      transition: opacity 0.2s linear;
     }
   }
 
@@ -50,15 +59,12 @@ export default {};
     background: #ff8484;
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
     border-radius: 10px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     opacity: 0;
 
     &:hover {
       cursor: pointer;
-      transition: opacity 0.1s linear;
-      opacity: 0.75;
+      transition: 0.2s linear;
+      opacity: 1;
     }
   }
 
@@ -89,6 +95,7 @@ export default {};
       line-height: 20.11px;
       margin-bottom: 32px;
     }
+
     .product-price {
       font-size: 24px;
       font-weight: 600;

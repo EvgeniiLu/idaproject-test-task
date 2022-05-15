@@ -66,6 +66,7 @@
 }
 
 .form-inner {
+  max-width: 332px;
   width: 100%;
   border-radius: 4px;
   padding: 24px;
