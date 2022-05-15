@@ -1,6 +1,33 @@
 <template>
-  <product-add-form />
-  <product-card />
+  <div class="container">
+    <header class="header">
+      <div class="header-inner">
+        <h2 class="form-title">Добавление товара</h2>
+        <select class="select">
+          <option>По наименованию</option>
+          <option>Сначала недорогие</option>
+          <option>Сначала дорогие</option>
+        </select>
+      </div>
+    </header>
+
+    <div class="content">
+      <aside class="aside">
+        <product-add-form class="form" />
+      </aside>
+
+      <main class="main">
+        <product-card class="card" />
+        <product-card class="card" />
+        <product-card class="card" />
+        <product-card class="card" />
+        <product-card class="card" />
+        <product-card class="card" />
+        <product-card class="card" />
+        <product-card class="card" />
+      </main>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -27,7 +54,7 @@ body {
   font-size: 16px;
   color: #3f3f3f;
 
-  background-color: #e5e5e5;
+  background: rgba(255, 254, 251, 0.8);
 }
 
 *,
@@ -47,5 +74,67 @@ h6 {
 
 p {
   margin: 0;
+}
+
+.container {
+  margin: 0 auto;
+  max-width: 1440px;
+  padding: 32px;
+  width: 100%;
+}
+
+.header {
+  width: 100%;
+  padding-bottom: 16px;
+
+  .header-inner {
+    display: flex;
+    justify-content: space-between;
+
+    .form-title {
+      font-weight: 600;
+      color: #3f3f3f;
+      font-size: 28px;
+      line-height: 35.2px;
+    }
+
+    .select {
+      font-size: 12px;
+      font-weight: 400;
+      line-height: 15.08px;
+      height: 36px;
+      color: #b4b4b4;
+      border: none;
+      background: #fffefb;
+      box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+      border-radius: 4px;
+      padding-left: 16px;
+    }
+  }
+}
+
+.content {
+  display: flex;
+  flex-direction: row;
+
+  .aside {
+    width: 100%;
+    max-width: 332px;
+
+    .form {
+      position: sticky;
+      top: 24px;
+    }
+  }
+
+  .main {
+    width: 100%;
+    max-width: 1044px;
+
+    .card {
+      margin-left: 16px;
+      margin-bottom: 16px;
+    }
+  }
 }
 </style>

@@ -1,6 +1,5 @@
 <template>
   <div class="form">
-    <h2 class="form-title">Добавление товара</h2>
     <div class="form-inner">
       <div class="form-item">
         <div class="title-input">
@@ -58,19 +57,10 @@
   max-width: 332px;
 }
 
-.form-title {
-  font-weight: 600;
-  color: #3f3f3f;
-  font-size: 28px;
-  line-height: 35.2px;
-}
-
 .form-inner {
-  max-width: 332px;
   width: 100%;
   border-radius: 4px;
   padding: 24px;
-  margin-top: 16px;
   background: #fffefb;
   box-shadow: 0px 20px 30px rgba(0, 0, 0, 0.04),
     0px 6px 10px rgba(0, 0, 0, 0.02);
