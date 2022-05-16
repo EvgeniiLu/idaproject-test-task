@@ -3,10 +3,11 @@
     <header class="header">
       <div class="header-inner">
         <h2 class="form-title">Добавление товара</h2>
-        <select class="select">
-          <option>По наименованию</option>
-          <option>Сначала недорогие</option>
-          <option>Сначала дорогие</option>
+        <select class="select" v-model="selectedValue">
+          <option value="" disabled>Выберите значение</option>
+          <option value="name">По наименованию</option>
+          <option value="min">Сначала недорогие</option>
+          <option value="max">Сначала дорогие</option>
         </select>
       </div>
     </header>
@@ -17,9 +18,14 @@
       </aside>
 
       <main class="main">
-        <div class="card" v-for="item in productObj" :key="item.time">
-          <product-card :itemObj="item" @deleteObj="deleteProduct" />
-        </div>
+        <template v-if="productObj.length">
+          <div class="card" v-for="item in productObj" :key="item.time">
+            <product-card :itemObj="item" @deleteObj="deleteProduct" />
+          </div>
+        </template>
+        <template v-else>
+          <div class="empty">Товаров нет</div>
+        </template>
       </main>
     </div>
   </div>
@@ -51,7 +57,19 @@ export default {
   data() {
     return {
       productObj: [],
+      selectedValue: "",
     };
+  },
+
+  watch: {
+    selectedValue() {
+      if (this.selectedValue === "name")
+        this.productObj.sort((a, b) => a.name.localeCompare(b.name));
+      if (this.selectedValue === "min")
+        this.productObj.sort((a, b) => +a.price - +b.price);
+      if (this.selectedValue === "max")
+        this.productObj.sort((a, b) => b.price - +a.price);
+    },
   },
 
   methods: {
@@ -60,6 +78,7 @@ export default {
       product.time = Date.now();
       this.productObj.unshift(product);
       localStorage.setItem(`${product.time}`, JSON.stringify(product));
+      this.selectedValue = "";
     },
 
     deleteProduct(obj) {
@@ -162,6 +181,15 @@ p {
       display: inline-block;
       margin-left: 16px;
       margin-bottom: 16px;
+    }
+
+    .empty {
+      font-size: 50px;
+      font-weight: 600;
+      margin-top: 25px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
   }
 }
