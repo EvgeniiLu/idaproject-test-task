@@ -13,7 +13,7 @@
 
     <div class="content">
       <aside class="aside">
-        <product-add-form class="form" />
+        <product-add-form class="form" @formIsValid="addProduct" />
       </aside>
 
       <main class="main">
@@ -39,6 +39,12 @@ export default {
   components: {
     ProductAddForm,
     ProductCard,
+  },
+
+  methods: {
+    addProduct(product) {
+      console.log(product);
+    },
   },
 };
 </script>

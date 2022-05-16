@@ -8,12 +8,12 @@
         <input
           v-model="form.name"
           @blur="if (form.name === '') errForm.name = true;"
-          @keypress="errForm.name = false"
+          @keydown="errForm.name = false"
           class="input"
           placeholder="Введите наименование товара"
         />
         <div v-if="errForm.name" class="input-err">
-          <span>Поле является обязательным</span>
+          <span>{{ errMessage.empty }}</span>
         </div>
       </div>
       <div class="form-item">
@@ -33,12 +33,15 @@
         <input
           v-model="form.url"
           @blur="if (form.url === '') errForm.url = true;"
-          @keypress="errForm.url = false"
+          @keydown="
+            errForm.url = false;
+            errMessage.url = 'Поле является обязательным';
+          "
           class="input"
           placeholder="Введите оссылку"
         />
         <div v-if="errForm.url" class="input-err">
-          <span>Поле является обязательным</span>
+          <span>{{ errMessage.url }}</span>
         </div>
       </div>
       <div class="form-item">
@@ -48,18 +51,22 @@
         <input
           v-model="form.price"
           @blur="if (form.price === '') errForm.price = true;"
-          @keypress="errForm.price = false"
+          @keydown="
+            errForm.price = false;
+            errMessage.price = 'Поле является обязательным';
+          "
           class="input"
           placeholder="Введите цену"
         />
         <div v-if="errForm.price" class="input-err">
-          <span>Поле является обязательным</span>
+          <span>{{ errMessage.price }}</span>
         </div>
       </div>
       <div class="form-item">
         <button
           class="input-btn-err"
-          :disabled="errForm.btnDis"
+          :class="{ 'input-btn': buttonDisabled === false }"
+          :disabled="buttonDisabled"
           @click="sumbitForm"
         >
           Добавить товар
@@ -82,19 +89,41 @@ export default {
       },
 
       errForm: {
-        btnDis: true,
         name: false,
         url: false,
         price: false,
       },
+
+      errMessage: {
+        empty: "Поле является обязательным",
+        url: "Поле является обязательным",
+        price: "Поле является обязательным",
+      },
     };
+  },
+
+  computed: {
+    buttonDisabled() {
+      return this.form.name === "" ||
+        this.form.url === "" ||
+        this.form.price === ""
+        ? true
+        : false;
+    },
   },
 
   methods: {
     sumbitForm() {
-      if (this.form.name === "") this.errForm.name = true;
-      if (!this.validURL(this.form.url)) this.errForm.url = true;
-      if (!this.validPrice(this.form.price)) this.errForm.price = true;
+      if (!this.validURL(this.form.url)) {
+        this.errMessage.url = "Некорректная ссылка";
+        this.errForm.url = true;
+      }
+      if (!this.validPrice(this.form.price)) {
+        this.errMessage.price = "Значение должно быть числом";
+        this.errForm.price = true;
+      }
+      if (!this.errForm.name && !this.errForm.url && !this.errForm.price)
+        this.$emit("formIsValid", this.form);
     },
 
     validURL(url) {
@@ -107,13 +136,12 @@ export default {
           "(\\#[-a-z\\d_]*)?$",
         "i"
       );
-
       return !!pattern.test(url);
     },
 
     validPrice(price) {
-      let number = price.split(" ").join("").match(/\d+/g);
-      return number;
+      let number = price.split(" ").join("");
+      return Number.isInteger(+number);
     },
   },
 };
