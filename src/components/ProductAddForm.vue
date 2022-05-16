@@ -3,38 +3,114 @@
     <div class="form-inner">
       <div class="form-item">
         <div class="title-input">
-          <span>Наименование товара</span>
+          <span class="point">Наименование товара</span>
         </div>
-        <input class="input" placeholder="Введите наименование товара" />
-        <div class="input-err"><span>Поле является обязательным</span></div>
+        <input
+          v-model="form.name"
+          @blur="if (form.name === '') errForm.name = true;"
+          @keypress="errForm.name = false"
+          class="input"
+          placeholder="Введите наименование товара"
+        />
+        <div v-if="errForm.name" class="input-err">
+          <span>Поле является обязательным</span>
+        </div>
       </div>
       <div class="form-item">
         <div class="title-input">
           <span>Описание товара</span>
         </div>
-        <textarea class="input-desc" placeholder="Введите описание товара" />
+        <textarea
+          v-model="form.desc"
+          class="input-desc"
+          placeholder="Введите описание товара"
+        />
       </div>
       <div class="form-item">
         <div class="title-input">
-          <span>Ссылка на изображение товара</span>
+          <span class="point">Ссылка на изображение товара</span>
         </div>
-        <input class="input" placeholder="Введите оссылку" />
-        <div class="input-err"><span>Поле является обязательным</span></div>
+        <input
+          v-model="form.url"
+          @blur="if (form.url === '') errForm.url = true;"
+          @keypress="errForm.url = false"
+          class="input"
+          placeholder="Введите оссылку"
+        />
+        <div v-if="errForm.url" class="input-err">
+          <span>Поле является обязательным</span>
+        </div>
       </div>
       <div class="form-item">
         <div class="title-input">
-          <span>Цена товара</span>
+          <span class="point">Цена товара</span>
         </div>
-        <input class="input" placeholder="Введите цену" />
-        <div class="input-err"><span>Поле является обязательным</span></div>
+        <input
+          v-model="form.price"
+          @blur="if (form.price === '') errForm.price = true;"
+          @keypress="errForm.price = false"
+          class="input"
+          placeholder="Введите цену"
+        />
+        <div v-if="errForm.price" class="input-err">
+          <span>Поле является обязательным</span>
+        </div>
       </div>
       <div class="form-item">
-        <button class="input-btn-err input-btn">Добавить товар</button>
+        <button class="input-btn-err" @click="sumbitForm">
+          Добавить товар
+        </button>
       </div>
     </div>
   </div>
 </template>
-<script></script>
+<script>
+export default {
+  name: "ProductAddForm",
+
+  data() {
+    return {
+      form: {
+        name: "",
+        desc: "",
+        url: "",
+        price: "",
+      },
+
+      errForm: {
+        name: false,
+        url: false,
+        price: false,
+      },
+    };
+  },
+
+  methods: {
+    sumbitForm() {
+      if (!this.validURL(this.form.url)) this.errForm.url = true;
+    },
+
+    validURL(url) {
+      let pattern = new RegExp(
+        "^(https?:\\/\\/)?" +
+          "((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|" +
+          "((\\d{1,3}\\.){3}\\d{1,3}))" +
+          "(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*" +
+          "(\\?[;&a-z\\d%_.~+=-]*)?" +
+          "(\\#[-a-z\\d_]*)?$",
+        "i"
+      );
+
+      return !!pattern.test(url);
+    },
+
+    validPrice(price) {
+      let number = price.split(" ").join("").match(/\d+/g);
+      console.log(number);
+    },
+  },
+};
+</script>
 <style lang="scss" scoped>
 %input-style {
   padding: 11px 16px;
@@ -80,7 +156,7 @@
       color: #49485e;
       margin-bottom: 4px;
 
-      span {
+      .point {
         position: relative;
 
         &:before {
