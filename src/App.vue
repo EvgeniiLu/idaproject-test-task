@@ -18,7 +18,7 @@
 
       <main class="main">
         <div class="card" v-for="(item, key) in productObj" :key="key">
-          <product-card :itemObj="item" />
+          <product-card :itemObj="item" @deleteObj="deleteProduct" />
         </div>
       </main>
     </div>
@@ -47,6 +47,10 @@ export default {
     addProduct(product) {
       let { name, desc, url, price } = product;
       this.productObj.unshift({ name, desc, url, price });
+    },
+
+    deleteProduct(obj) {
+      this.productObj = this.productObj.filter((value) => value !== obj);
     },
   },
 };

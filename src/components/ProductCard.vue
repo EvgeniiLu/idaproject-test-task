@@ -1,6 +1,6 @@
 <template>
   <div class="product-card">
-    <button class="product-delete">
+    <button class="product-delete" @click="deleteProduct">
       <delete-icon />
     </button>
     <div class="product-image">
@@ -31,6 +31,12 @@ export default {
 
   props: {
     itemObj: Object,
+  },
+
+  methods: {
+    deleteProduct() {
+      this.$emit("deleteObj", this.itemObj);
+    },
   },
 };
 </script>
