@@ -122,8 +122,15 @@ export default {
         this.errMessage.price = "Значение должно быть числом";
         this.errForm.price = true;
       }
-      if (!this.errForm.name && !this.errForm.url && !this.errForm.price)
+      if (!this.errForm.name && !this.errForm.url && !this.errForm.price) {
         this.$emit("formIsValid", this.form);
+        this.form = {
+          name: "",
+          desc: "",
+          url: "",
+          price: "",
+        };
+      }
     },
 
     validURL(url) {

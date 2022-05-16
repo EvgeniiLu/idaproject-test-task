@@ -17,14 +17,9 @@
       </aside>
 
       <main class="main">
-        <product-card class="card" />
-        <product-card class="card" />
-        <product-card class="card" />
-        <product-card class="card" />
-        <product-card class="card" />
-        <product-card class="card" />
-        <product-card class="card" />
-        <product-card class="card" />
+        <div class="card" v-for="(item, key) in productObj" :key="key">
+          <product-card :itemObj="item" />
+        </div>
       </main>
     </div>
   </div>
@@ -36,14 +31,22 @@ import ProductCard from "./components/ProductCard.vue";
 
 export default {
   name: "App",
+
   components: {
     ProductAddForm,
     ProductCard,
   },
 
+  data() {
+    return {
+      productObj: [],
+    };
+  },
+
   methods: {
     addProduct(product) {
-      console.log(product);
+      let { name, desc, url, price } = product;
+      this.productObj.unshift({ name, desc, url, price });
     },
   },
 };
@@ -138,6 +141,7 @@ p {
     max-width: 1044px;
 
     .card {
+      display: inline-block;
       margin-left: 16px;
       margin-bottom: 16px;
     }

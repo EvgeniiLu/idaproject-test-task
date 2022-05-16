@@ -4,17 +4,18 @@
       <delete-icon />
     </button>
     <div class="product-image">
-      <img src="../assets/img/Rectangle.png" alt="Упс, ошибочка(" />
+      <img :src="itemObj.url" alt="Упс, ошибочка(" />
     </div>
     <div class="product-info">
-      <div class="product-name"><span>Наименование товара</span></div>
-      <div class="product-desc">
-        <span>
-          Довольно-таки интересное описание товара в несколько строк.
-          Довольно-таки интересное описание товара в несколько строк
-        </span>
+      <div class="product-name">
+        <span>{{ itemObj.name }}</span>
       </div>
-      <div class="product-price"><span>10 000</span> <span>руб.</span></div>
+      <div class="product-desc">
+        <span>{{ itemObj.desc }}</span>
+      </div>
+      <div class="product-price">
+        <span>{{ itemObj.price }}</span> <span>руб.</span>
+      </div>
     </div>
   </div>
 </template>
@@ -23,8 +24,13 @@ import DeleteIcon from "./DeleteIcon.vue";
 
 export default {
   name: "ProductCard",
+
   components: {
     DeleteIcon,
+  },
+
+  props: {
+    itemObj: Object,
   },
 };
 </script>
@@ -70,7 +76,7 @@ export default {
 
   .product-image {
     width: 100%;
-    max-width: 332px;
+    min-width: 332px;
     height: 200px;
     border-radius: 4px 4px 0px 0px;
     display: flex;
@@ -94,6 +100,8 @@ export default {
       font-weight: 400;
       line-height: 20.11px;
       margin-bottom: 32px;
+      width: 100%;
+      height: 80px;
     }
 
     .product-price {
