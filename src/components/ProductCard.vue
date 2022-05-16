@@ -4,7 +4,7 @@
       <delete-icon />
     </button>
     <div class="product-image">
-      <img :src="itemObj.url" alt="Упс, ошибочка(" />
+      <img :src="imgUrl" alt="Упс, ошибочка(" />
     </div>
     <div class="product-info">
       <div class="product-name">
@@ -21,6 +21,7 @@
 </template>
 <script>
 import DeleteIcon from "./DeleteIcon.vue";
+import { loadImage } from "../api.js";
 
 export default {
   name: "ProductCard",
@@ -31,6 +32,19 @@ export default {
 
   props: {
     itemObj: Object,
+  },
+
+  data() {
+    return {
+      imgUrl: "",
+    };
+  },
+
+  created: async function () {
+    const url = await loadImage(this.itemObj.url);
+    if (url) this.imgUrl = url.url;
+    else
+      this.imgUrl = "https://robohash.org/tot%E2%80%A6ng?size=300x300&set=set1";
   },
 
   computed: {
