@@ -57,7 +57,11 @@
         </div>
       </div>
       <div class="form-item">
-        <button class="input-btn-err" @click="sumbitForm">
+        <button
+          class="input-btn-err"
+          :disabled="errForm.btnDis"
+          @click="sumbitForm"
+        >
           Добавить товар
         </button>
       </div>
@@ -78,6 +82,7 @@ export default {
       },
 
       errForm: {
+        btnDis: true,
         name: false,
         url: false,
         price: false,
@@ -87,7 +92,9 @@ export default {
 
   methods: {
     sumbitForm() {
+      if (this.form.name === "") this.errForm.name = true;
       if (!this.validURL(this.form.url)) this.errForm.url = true;
+      if (!this.validPrice(this.form.price)) this.errForm.price = true;
     },
 
     validURL(url) {
@@ -106,7 +113,7 @@ export default {
 
     validPrice(price) {
       let number = price.split(" ").join("").match(/\d+/g);
-      console.log(number);
+      return number;
     },
   },
 };
