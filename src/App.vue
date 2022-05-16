@@ -17,7 +17,7 @@
       </aside>
 
       <main class="main">
-        <div class="card" v-for="(item, key) in productObj" :key="key">
+        <div class="card" v-for="item in productObj" :key="item.time">
           <product-card :itemObj="item" @deleteObj="deleteProduct" />
         </div>
       </main>
@@ -37,26 +37,34 @@ export default {
     ProductCard,
   },
 
+  mounted: function () {
+    if (localStorage.length) {
+      for (let i = 0; i < localStorage.length; i++) {
+        this.productObj.unshift(
+          JSON.parse(localStorage.getItem(localStorage.key(i)))
+        );
+        this.productObj.sort((a, b) => b.time - a.time);
+      }
+    }
+  },
+
   data() {
     return {
       productObj: [],
     };
   },
 
-  watch: {
-    productObj() {
-      console.log(this.productObj);
-    },
-  },
-
   methods: {
-    addProduct(product) {
-      let { name, desc, url, price } = product;
-      this.productObj.unshift({ name, desc, url, price });
+    addProduct({ name, desc, url, price }) {
+      const product = { name, desc, url, price };
+      product.time = Date.now();
+      this.productObj.unshift(product);
+      localStorage.setItem(`${product.time}`, JSON.stringify(product));
     },
 
     deleteProduct(obj) {
       this.productObj = this.productObj.filter((value) => value !== obj);
+      localStorage.removeItem(obj.time);
     },
   },
 };
