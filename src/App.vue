@@ -43,6 +43,12 @@ export default {
     };
   },
 
+  watch: {
+    productObj() {
+      console.log(this.productObj);
+    },
+  },
+
   methods: {
     addProduct(product) {
       let { name, desc, url, price } = product;

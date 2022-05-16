@@ -14,7 +14,7 @@
         <span>{{ itemObj.desc }}</span>
       </div>
       <div class="product-price">
-        <span>{{ itemObj.price }}</span> <span>руб.</span>
+        <span>{{ mask }}</span> <span>руб.</span>
       </div>
     </div>
   </div>
@@ -31,6 +31,12 @@ export default {
 
   props: {
     itemObj: Object,
+  },
+
+  computed: {
+    mask() {
+      return this.itemObj.price.replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+    },
   },
 
   methods: {
